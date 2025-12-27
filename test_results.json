@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Single 1",
+    "roll": "[1]",
+    "expected": 100,
+    "actual": 100,
+    "passed": true
+  },
+  {
+    "name": "Single 5",
+    "roll": "[5]",
+    "expected": 50,
+    "actual": 50,
+    "passed": true
+  },
+  {
+    "name": "Three 1s",
+    "roll": "[1,1,1]",
+    "expected": 1000,
+    "actual": 1000,
+    "passed": true
+  },
+  {
+    "name": "Three 2s",
+    "roll": "[2,2,2]",
+    "expected": 200,
+    "actual": 200,
+    "passed": true
+  },
+  {
+    "name": "Three 6s",
+    "roll": "[6,6,6]",
+    "expected": 600,
+    "actual": 600,
+    "passed": true
+  },
+  {
+    "name": "Four 1s",
+    "roll": "[1,1,1,1]",
+    "expected": 2000,
+    "actual": 2000,
+    "passed": true
+  },
+  {
+    "name": "Five 1s",
+    "roll": "[1,1,1,1,1]",
+    "expected": 4000,
+    "actual": 4000,
+    "passed": true
+  },
+  {
+    "name": "Six 1s",
+    "roll": "[1,1,1,1,1,1]",
+    "expected": 8000,
+    "actual": 8000,
+    "passed": true
+  },
+  {
+    "name": "Small Straight",
+    "roll": "[1,2,3,4,5]",
+    "expected": 750,
+    "actual": 750,
+    "passed": true
+  },
+  {
+    "name": "Large Straight",
+    "roll": "[2,3,4,5,6]",
+    "expected": 750,
+    "actual": 750,
+    "passed": true
+  },
+  {
+    "name": "Full Straight",
+    "roll": "[1,2,3,4,5,6]",
+    "expected": 1500,
+    "actual": 1500,
+    "passed": true
+  },
+  {
+    "name": "Three Pair",
+    "roll": "[1,1,2,2,3,3]",
+    "expected": 1500,
+    "actual": 1500,
+    "passed": true
+  },
+  {
+    "name": "Two Triplets",
+    "roll": "[1,1,1,2,2,2]",
+    "expected": 1500,
+    "actual": 1500,
+    "passed": true
+  }
+]

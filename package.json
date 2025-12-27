@@ -1,0 +1,8 @@
+{
+  "name": "zilch-solver",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Zilch probability calculator",
+  "main": "index.js",
+  "dependencies": {}
+}
