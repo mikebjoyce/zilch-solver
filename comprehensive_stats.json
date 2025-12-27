@@ -1,7 +1,7 @@
 {
   "1": {
-    "zilchRate": 0.666857,
-    "avgGain": 75.07361703532717,
+    "zilchRate": 0.66672298,
+    "avgGain": 75.00359460727296,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
@@ -10,8 +10,8 @@
     }
   },
   "2": {
-    "zilchRate": 0.444034,
-    "avgGain": 90.01467715651677,
+    "zilchRate": 0.44442915,
+    "avgGain": 89.9974800693737,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
@@ -20,8 +20,8 @@
     }
   },
   "3": {
-    "zilchRate": 0.277626,
-    "avgGain": 120.08426383009355,
+    "zilchRate": 0.27780252,
+    "avgGain": 120.19341718002117,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
@@ -30,8 +30,8 @@
     }
   },
   "4": {
-    "zilchRate": 0.157619,
-    "avgGain": 170.51607289338196,
+    "zilchRate": 0.15746853,
+    "avgGain": 170.34007643655139,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
@@ -40,23 +40,23 @@
     }
   },
   "5": {
-    "zilchRate": 0.07712,
-    "avgGain": 266.2932884015257,
+    "zilchRate": 0.07718997,
+    "avgGain": 266.41552920702435,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
-      "smallStraight": 0.015443,
-      "largeStraight": 0.015488
+      "smallStraight": 0.01542957,
+      "largeStraight": 0.01543312
     }
   },
   "6": {
-    "zilchRate": 0.023107,
-    "avgGain": 475.0281760643182,
+    "zilchRate": 0.02314882,
+    "avgGain": 475.05858568958274,
     "specialProbabilities": {
-      "fullStraight": 0.015532,
-      "threePair": 0.044965,
-      "smallStraight": 0.038802,
-      "largeStraight": 0.038481
+      "fullStraight": 0.01542916,
+      "threePair": 0.04501116,
+      "smallStraight": 0.03859229,
+      "largeStraight": 0.03855481
     }
   }
 }

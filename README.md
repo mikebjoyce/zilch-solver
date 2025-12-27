@@ -70,23 +70,23 @@ node sabotage.js         # Analyze inheritance traps
 
 ## 🎯 Key Strategy Insights
 
-According to **1,000,000 simulations per die count:**
+According to **100,000,000 simulations per die count:**
 
-* **Never stop on 6 dice:** 2.3% Zilch risk is negligible compared to potential 474-point average gain
-* **The 3-Dice Pivot:** Most critical decision point. Banking threshold ≈ **313 points**
-* **The 1-Die Trap:** Banking with 1 die remaining forces 66.66% Zilch probability on opponent
+* **Never stop on 6 dice:** 2.31% Zilch risk is negligible compared to potential 475-point average gain
+* **The 3-Dice Pivot:** Most critical decision point. Banking threshold ≈ **312 points**
+* **The 1-Die Trap:** Banking with 1 die remaining forces 66.67% Zilch probability on opponent
 * **Break-Even Thresholds:** Rolling is mathematically correct until you reach specific turn totals (see table below)
 
 ### Quick Reference: When to Bank
 
 | Dice Remaining | Break-Even Threshold | Risk if Rolling |
 |:---------------|:---------------------|:----------------|
-| **6** | ~19,908 pts | 2.33% Zilch |
-| **5** | ~3,182 pts | 7.72% Zilch |
-| **4** | ~913 pts | 15.72% Zilch |
-| **3** | **~313 pts** | 27.70% Zilch |
-| **2** | ~112 pts | 44.51% Zilch |
-| **1** | ~37 pts | 66.66% Zilch |
+| **6** | ~20,047 pts | 2.31% Zilch |
+| **5** | ~3,185 pts | 7.72% Zilch |
+| **4** | ~911 pts | 15.75% Zilch |
+| **3** | **~312 pts** | 27.78% Zilch |
+| **2** | ~113 pts | 44.44% Zilch |
+| **1** | ~37 pts | 66.67% Zilch |
 
 ---
 
@@ -171,12 +171,12 @@ Every other player gets **one more turn** to beat the high score.
 
 | Dice | Zilch % | Success % | Avg. Gain |
 |:-----|:--------|:----------|:----------|
-| **1** | 66.66% | 33.34% | 75.03 pts |
-| **2** | 44.51% | 55.49% | 89.93 pts |
-| **3** | 27.70% | 72.30% | 120.24 pts |
-| **4** | 15.72% | 84.28% | 170.49 pts |
-| **5** | 7.72% | 92.28% | 266.13 pts |
-| **6** | 2.33% | 97.67% | 474.95 pts |
+| **1** | 66.67% | 33.33% | 75.00 pts |
+| **2** | 44.44% | 55.56% | 90.00 pts |
+| **3** | 27.78% | 72.22% | 120.19 pts |
+| **4** | 15.75% | 84.25% | 170.34 pts |
+| **5** | 7.72% | 92.28% | 266.42 pts |
+| **6** | 2.31% | 97.69% | 475.06 pts |
 
 ---
 
@@ -188,12 +188,12 @@ Every other player gets **one more turn** to beat the high score.
 
 | Dice | EV @ 0 pts | EV @ 500 pts | EV @ 1000 pts | Break-Even Threshold |
 |:-----|:-----------|:-------------|:--------------|:---------------------|
-| **1** | 25.02 | -308.26 | -641.54 | **~37 pts** |
-| **2** | 49.90 | -172.66 | -395.22 | **~112 pts** |
-| **3** | 86.93 | -51.59 | -190.10 | **~313 pts** |
-| **4** | 143.68 | 65.07 | -13.55 | **~913 pts** |
-| **5** | 245.59 | 207.01 | 168.43 | **~3182 pts** |
-| **6** | 463.88 | 452.23 | 440.58 | **~19908 pts** |
+| **1** | 25.00 | -308.36 | -641.73 | **~37 pts** |
+| **2** | 50.00 | -172.21 | -394.43 | **~113 pts** |
+| **3** | 86.80 | -52.10 | -191.00 | **~312 pts** |
+| **4** | 143.52 | 64.78 | -13.95 | **~911 pts** |
+| **5** | 245.85 | 207.26 | 168.66 | **~3185 pts** |
+| **6** | 464.06 | 452.49 | 440.91 | **~20047 pts** |
 
 ---
 
@@ -202,8 +202,8 @@ Every other player gets **one more turn** to beat the high score.
 | Dice | Small Straight | Large Straight | Full Straight | Three Pair |
 |:-----|:---------------|:---------------|:--------------|:-----------|
 | **4** | 0.00% | 0.00% | 0.00% | 0.00% |
-| **5** | 1.53% | 1.54% | 0.00% | 0.00% |
-| **6** | 5.38% | 5.41% | 1.56% | 4.52% |
+| **5** | 1.54% | 1.54% | 0.00% | 0.00% |
+| **6** | 3.86% | 3.86% | 1.54% | 4.50% |
 
 *Note: 1-3 dice cannot form these combinations.*
 
@@ -213,7 +213,7 @@ Every other player gets **one more turn** to beat the high score.
 
 #### Opening Turn Strategy
 
-With 6 dice, your EV starting from 0 is **463.88 points**.
+With 6 dice, your EV starting from 0 is **464.06 points**.
 
 * **The 400-Point Paradox:** Math suggests rolling to higher thresholds, but banking at **~400 points** is a valid **"Tempo Play"**
 * **Why?** Secures early lead, forces next player into difficult inheritance (1-2 dice), making them risk or restart
@@ -239,9 +239,9 @@ Banking weaponizes the **Inheritance Rule**.
 
 | Dice Passed | Opponent Zilch Risk | Bait Value (Min Bank) |
 |:------------|:--------------------|:----------------------|
-| **1 Die** | **66.66%** | **1317 pts** |
-| **2 Dice** | **44.51%** | **747 pts** |
-| **3 Dice** | **27.70%** | **522 pts** |
+| **1 Die** | **66.67%** | **1318 pts** |
+| **2 Dice** | **44.44%** | **746 pts** |
+| **3 Dice** | **27.78%** | **523 pts** |
 
 ---
 
@@ -249,14 +249,12 @@ Banking weaponizes the **Inheritance Rule**.
 
 Quick reference for mid-game decisions.
 
-```
-Turn Total | 1 Die | 2 Dice | 3 Dice | 4 Dice | 5 Dice | 6 Dice
------------|-------|--------|--------|--------|--------|-------
-0-300      | BANK  | BANK   | ROLL   | ROLL   | ROLL   | ROLL
-300-600    | BANK  | BANK   | BANK   | ROLL   | ROLL   | ROLL
-600-1000   | BANK  | BANK   | BANK   | RISKY  | ROLL   | ROLL
-1000+      | BANK  | BANK   | BANK   | BANK   | ROLL   | ROLL
-```
+| Turn Total | 1 Die | 2 Dice | 3 Dice | 4 Dice | 5 Dice | 6 Dice |
+|:-----------|:------|:-------|:-------|:-------|:-------|:-------|
+| **0-300** | BANK | BANK | ROLL | ROLL | ROLL | ROLL |
+| **300-600** | BANK | BANK | BANK | ROLL | ROLL | ROLL |
+| **600-1000** | BANK | BANK | BANK | RISKY | ROLL | ROLL |
+| **1000+** | BANK | BANK | BANK | BANK | ROLL | ROLL |
 
 **Legend:**
 * **ROLL:** Positive EV. Statistically safe
