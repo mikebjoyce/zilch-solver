@@ -1,10 +1,11 @@
 import { calculateScore } from './engine.js';
+import { fileURLToPath } from 'url';
 
 /**
  * Categorizes a roll result into specific "Hand Types"
  * for the strategy report.
  */
-function getHandType(roll, result) {
+export function getHandType(roll, result) {
     if (result.score === 0) return "Zilch";
     
     const counts = new Array(7).fill(0);
@@ -32,7 +33,7 @@ function getHandType(roll, result) {
 /**
  * Solves the actual probabilities of specific hands for 1-6 dice.
  */
-function solveHandProbabilities(iterations = 500000) {
+export function solveHandProbabilities(iterations = process.env.SIMULATION_ITERATIONS ? parseInt(process.env.SIMULATION_ITERATIONS) : 500000) {
     const table = {};
 
     for (let diceCount = 1; diceCount <= 6; diceCount++) {
@@ -75,4 +76,7 @@ function solveHandProbabilities(iterations = 500000) {
     console.table(table);
 }
 
-solveHandProbabilities();
+// Only run if this file is the main entry point
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    solveHandProbabilities();
+}

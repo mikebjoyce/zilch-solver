@@ -4,6 +4,8 @@ import fs from 'fs';
 const STATS = JSON.parse(fs.readFileSync('comprehensive_stats.json', 'utf8'));
 const TEST_RESULTS = JSON.parse(fs.readFileSync('test_results.json', 'utf8'));
 
+const ITERATIONS = process.env.SIMULATION_ITERATIONS ? parseInt(process.env.SIMULATION_ITERATIONS) : 1000000;
+
 function fmtPct(val) { return (val * 100).toFixed(2) + '%'; }
 function fmtNum(val) { return val.toFixed(2); }
 
@@ -111,7 +113,7 @@ const reportContent = `
 # 🎲 Zilch Strategy Guide: The Serendipity Creak Edition
 
 ## 1. Executive Summary & Risk Analysis
-This guide is generated from **1,000,000** Monte Carlo simulations per die count.
+This guide is generated from **${ITERATIONS.toLocaleString()}** Monte Carlo simulations per die count.
 
 ### Consolidated Risk Table
 ${generateRiskTable()}

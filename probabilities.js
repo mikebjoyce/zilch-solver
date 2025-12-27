@@ -38,7 +38,7 @@ function detectSpecials(roll) {
  * Runs a Monte Carlo simulation to find the chance of Zilching
  * and other stats based on the number of dice rolled.
  */
-function runSimulation(diceCount, iterations = 1000000) {
+function runSimulation(diceCount, iterations = process.env.SIMULATION_ITERATIONS ? parseInt(process.env.SIMULATION_ITERATIONS) : 1000000) {
     let zilches = 0;
     let totalSuccessScore = 0;
     let successCount = 0;
@@ -95,7 +95,8 @@ function runSimulation(diceCount, iterations = 1000000) {
     };
 }
 
-console.log("--- Zilch Full Battery Simulation (1M Iterations) ---");
+const iterations = process.env.SIMULATION_ITERATIONS ? parseInt(process.env.SIMULATION_ITERATIONS) : 1000000;
+console.log(`--- Zilch Full Battery Simulation (${iterations.toLocaleString()} Iterations) ---`);
 const comprehensiveStats = {};
 
 for (let d = 1; d <= 6; d++) {

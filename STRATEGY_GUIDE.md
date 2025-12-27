@@ -1,17 +1,17 @@
 # 🎲 Zilch Strategy Guide: The Serendipity Creak Edition
 
 ## 1. Executive Summary & Risk Analysis
-This guide is generated from **1,000,000** Monte Carlo simulations per die count.
+This guide is generated from **10,000,000** Monte Carlo simulations per die count.
 
 ### Consolidated Risk Table
 | Dice | Zilch % | Success % | Avg. Gain |
 | :--- | :--- | :--- | :--- |
-| **1** | 66.57% | 33.43% | 74.90 pts |
-| **2** | 44.37% | 55.63% | 90.07 pts |
-| **3** | 27.79% | 72.21% | 119.98 pts |
-| **4** | 15.71% | 84.29% | 170.04 pts |
-| **5** | 7.71% | 92.29% | 266.18 pts |
-| **6** | 2.34% | 97.66% | 475.06 pts |
+| **1** | 66.66% | 33.34% | 75.02 pts |
+| **2** | 44.44% | 55.56% | 89.98 pts |
+| **3** | 27.78% | 72.22% | 120.15 pts |
+| **4** | 15.74% | 84.26% | 170.36 pts |
+| **5** | 7.71% | 92.29% | 266.35 pts |
+| **6** | 2.32% | 97.68% | 475.14 pts |
 
 ### Expected Value (EV) Analysis
 The "Break-Even" point is where the expected gain from rolling equals the potential loss of your current turn total.
@@ -19,12 +19,12 @@ The "Break-Even" point is where the expected gain from rolling equals the potent
 
 | Dice | EV @ 0 pts | EV @ 500 pts | EV @ 1000 pts | Break-Even (Threshold) |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | 25.04 | -307.81 | -640.66 | **~37 pts** |
-| **2** | 50.11 | -171.73 | -393.57 | **~112 pts** |
-| **3** | 86.64 | -52.32 | -191.27 | **~311 pts** |
-| **4** | 143.33 | 64.80 | -13.73 | **~912 pts** |
-| **5** | 245.67 | 207.13 | 168.60 | **~3187 pts** |
-| **6** | 463.95 | 452.25 | 440.54 | **~19825 pts** |
+| **1** | 25.01 | -308.28 | -641.58 | **~37 pts** |
+| **2** | 49.99 | -172.22 | -394.43 | **~112 pts** |
+| **3** | 86.77 | -52.13 | -191.03 | **~312 pts** |
+| **4** | 143.54 | 64.83 | -13.88 | **~911 pts** |
+| **5** | 245.81 | 207.25 | 168.68 | **~3187 pts** |
+| **6** | 464.13 | 452.53 | 440.94 | **~20017 pts** |
 
 ## 2. Special Combinations
 Frequency of rolling high-value combinations.
@@ -32,15 +32,15 @@ Frequency of rolling high-value combinations.
 | Dice | Small Straight | Large Straight | Full Straight | Three Pair |
 | :--- | :--- | :--- | :--- | :--- |
 | **4** | 0.00% | 0.00% | 0.00% | 0.00% |
-| **5** | 1.54% | 1.55% | 0.00% | 0.00% |
-| **6** | 5.42% | 5.41% | 1.54% | 4.49% |
+| **5** | 1.54% | 1.54% | 0.00% | 0.00% |
+| **6** | 5.41% | 5.40% | 1.55% | 4.50% |
 
 *Note: 1-3 dice cannot form these combinations (0.00%).*
 
 ## 3. Tactical Guide
 
 ### Opening Turn Strategy
-With 6 dice, your EV starting from 0 is **463.95 points**.
+With 6 dice, your EV starting from 0 is **464.13 points**.
 *   **The 400 Point Paradox:** While the math suggests rolling until you hit a much higher threshold, banking at **~400 points** on your first turn is a valid "Tempo Play."
 *   **Why?** It secures a lead and often leaves the next player with a difficult inheritance (1 or 2 dice), forcing them to take a risk or start fresh.
 
@@ -51,7 +51,7 @@ With 6 dice, your EV starting from 0 is **463.95 points**.
 
 ### Multiplayer Dynamics: The "Blocking Strategy"
 Banking is not just about securing points; it's about **weaponizing the Inheritance Rule**.
-*   **The Trap:** Leaving an opponent with 1 die (Zilch Risk: **66.57%**) or 2 dice (Zilch Risk: **44.37%**) is a powerful defensive move.
+*   **The Trap:** Leaving an opponent with 1 die (Zilch Risk: **66.66%**) or 2 dice (Zilch Risk: **44.44%**) is a powerful defensive move.
 *   **When to Trap:** If you have a moderate score (e.g., 400-500) and are down to 1 or 2 dice, **BANK**. You force the next player to choose between a high-risk inheritance or starting from 0 (negating your "gift").
 
 #### Inheritance Bait Calculator
@@ -60,9 +60,9 @@ Use this table to determine if your banked score is high enough to "bait" a math
 
 | Dice Passed | Opponent Zilch Risk | Bait Value (Min Bank) |
 | :--- | :--- | :--- |
-| **1 Dice** | **66.57%** | **1313 pts** |
-| **2 Dice** | **44.37%** | **744 pts** |
-| **3 Dice** | **27.79%** | **523 pts** |
+| **1 Dice** | **66.66%** | **1318 pts** |
+| **2 Dice** | **44.44%** | **746 pts** |
+| **3 Dice** | **27.78%** | **523 pts** |
 
 ## 4. Decision Tools
 

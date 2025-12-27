@@ -36,7 +36,7 @@ function simulateTurn(stopThreshold, inheritedPoints = 0, inheritedDice = 6) {
 }
 
 // Let's test the "Stay at 500" strategy vs "Stay at 1000" strategy
-function compareStrategies(threshold, iterations = 100000) {
+function compareStrategies(threshold, iterations = process.env.SIMULATION_ITERATIONS ? parseInt(process.env.SIMULATION_ITERATIONS) : 100000) {
     let totalPoints = 0;
     for (let i = 0; i < iterations; i++) {
         totalPoints += simulateTurn(threshold);
