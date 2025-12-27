@@ -1,43 +1,95 @@
 # 🎲 Zilch Strategy Guide: The Serendipity Creak Edition
 
-## 1. The "Golden Rule" of 6 Dice
-**Never, under any circumstances, stop when you have Hot Dice (6 dice remaining).**
+## 1. Executive Summary & Risk Analysis
+This guide is generated from **1,000,000** Monte Carlo simulations per die count.
 
-*   **The Math:** Your chance of Zilching is only **2.3%**.
-*   **The Logic:** Even if you have a massive turn total, the risk of losing it is statistically negligible compared to the massive scoring potential of a fresh 6-dice roll.
+### Consolidated Risk Table
+| Dice | Zilch % | Success % | Avg. Gain |
+| :--- | :--- | :--- | :--- |
+| **1** | 66.57% | 33.43% | 74.90 pts |
+| **2** | 44.37% | 55.63% | 90.07 pts |
+| **3** | 27.79% | 72.21% | 119.98 pts |
+| **4** | 15.71% | 84.29% | 170.04 pts |
+| **5** | 7.71% | 92.29% | 266.18 pts |
+| **6** | 2.34% | 97.66% | 475.06 pts |
 
-## 2. The 3-Dice Pivot Point
-**3 dice is the "danger zone."**
+### Expected Value (EV) Analysis
+The "Break-Even" point is where the expected gain from rolling equals the potential loss of your current turn total.
+**Formula:** `EV = (Success% * AvgGain) - (Zilch% * CurrentTurnTotal)`
 
-*   **The Math:** You have a **72.25%** success rate with 3 dice, but that drops to **55.55%** once you go down to 2.
-*   **Strategy:** If your current turn total is over **312 points** and you are down to 3 dice, Bank. The expected gain from rolling those 3 dice is not high enough to justify risking the points you already have.
+| Dice | EV @ 0 pts | EV @ 500 pts | EV @ 1000 pts | Break-Even (Threshold) |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | 25.04 | -307.81 | -640.66 | **~37 pts** |
+| **2** | 50.11 | -171.73 | -393.57 | **~112 pts** |
+| **3** | 86.64 | -52.32 | -191.27 | **~311 pts** |
+| **4** | 143.33 | 64.80 | -13.73 | **~912 pts** |
+| **5** | 245.67 | 207.13 | 168.60 | **~3187 pts** |
+| **6** | 463.95 | 452.25 | 440.54 | **~19825 pts** |
 
-## 3. Weaponizing the "Inheritance Rule"
-**This is how you beat players who only look at their own score. You don't just bank points; you "gift" a bad hand to the next player.**
+## 2. Special Combinations
+Frequency of rolling high-value combinations.
 
-*   **The 'Trap' Play:** If you have 500 points and only 1 die left, STOP.
-*   **The Result:** You bank your 500 points, and the next player is forced to choose: start at 0, or inherit your 500 points with a **66.71%** chance of Zilching immediately.
-*   **Winning Tip:** If you leave them 1 or 2 dice, you aren't just being safe; you are actively trying to make them lose points.
+| Dice | Small Straight | Large Straight | Full Straight | Three Pair |
+| :--- | :--- | :--- | :--- | :--- |
+| **4** | 0.00% | 0.00% | 0.00% | 0.00% |
+| **5** | 1.54% | 1.55% | 0.00% | 0.00% |
+| **6** | 5.42% | 5.41% | 1.54% | 4.49% |
 
-### The "Handoff" Calculator
-Use this table to know if your "gift" is actually a trap. The **Min. Bank to Bait** is the minimum points you must pass to make it mathematically correct for your opponent to take the risk. If you pass less than this, a smart opponent will just start fresh.
+*Note: 1-3 dice cannot form these combinations (0.00%).*
 
-| Dice Passed | Opponent Zilch Risk | Min. Bank to Bait |
+## 3. Tactical Guide
+
+### Opening Turn Strategy
+With 6 dice, your EV starting from 0 is **463.95 points**.
+*   **The 400 Point Paradox:** While the math suggests rolling until you hit a much higher threshold, banking at **~400 points** on your first turn is a valid "Tempo Play."
+*   **Why?** It secures a lead and often leaves the next player with a difficult inheritance (1 or 2 dice), forcing them to take a risk or start fresh.
+
+### Endgame Tactics
+*   **Conservative Play:** If you are leading, adhere strictly to the **Break-Even Thresholds**. Do not give opponents a chance to catch up by taking unnecessary risks.
+*   **Chasing:** If you are behind, you must take "Negative EV" risks. Use the **EV Table** to see how much "theoretical value" you are sacrificing for a chance to win.
+*   **Final Round Inheritance:** If the player before you banks a low score (< 300) and leaves you 1 or 2 dice, **Start Fresh**. The risk of Zilching immediately is too high compared to the potential gain of a fresh 6-dice roll.
+
+### Multiplayer Dynamics: The "Blocking Strategy"
+Banking is not just about securing points; it's about **weaponizing the Inheritance Rule**.
+*   **The Trap:** Leaving an opponent with 1 die (Zilch Risk: **66.57%**) or 2 dice (Zilch Risk: **44.37%**) is a powerful defensive move.
+*   **When to Trap:** If you have a moderate score (e.g., 400-500) and are down to 1 or 2 dice, **BANK**. You force the next player to choose between a high-risk inheritance or starting from 0 (negating your "gift").
+
+#### Inheritance Bait Calculator
+Use this table to determine if your banked score is high enough to "bait" a mathematically perfect opponent into taking a bad risk.
+*   **Bait Value:** The minimum points you must pass to make it mathematically correct (Positive EV) for your opponent to take the risk.
+
+| Dice Passed | Opponent Zilch Risk | Bait Value (Min Bank) |
 | :--- | :--- | :--- |
-| **1 Dice** | **66.7%** | **438 pts** |
-| **2 Dice** | **44.5%** | **413 pts** |
-| **3 Dice** | **27.8%** | **376 pts** |
+| **1 Dice** | **66.57%** | **1313 pts** |
+| **2 Dice** | **44.37%** | **744 pts** |
+| **3 Dice** | **27.79%** | **523 pts** |
 
-## 4. Know Your Thresholds
+## 4. Decision Tools
 
-| Dice Remaining | Max "Safe" Points | Logic |
-| :--- | :--- | :--- |
-| **6 Dice** | **Always Roll** | The risk is too low to ignore. |
-| **5 Dice** | **~3196 Points** | Only bank if you are already at a massive total. |
-| **4 Dice** | **~912 Points** | Still relatively safe (84% success). |
-| **3 Dice** | **~312 Points** | The "Pivot." Be very careful here. |
-| **2 Dice** | **~112 Points** | A coin flip. Only roll if you have almost nothing. |
-| **1 Die** | **~37 Points** | Effectively a "Death Sentence." Never roll. |
+### Risk/Reward Decision Matrix
+Quick reference for mid-game decisions.
+```text
+Turn Total | 1 Die | 2 Dice | 3 Dice | 4 Dice | 5 Dice | 6 Dice
+-----------|-------|--------|--------|--------|--------|-------
+0-300      | BANK  | BANK  | ROLL  | ROLL  | ROLL  | ROLL  |
+300-600    | BANK  | BANK  | BANK  | ROLL  | ROLL  | ROLL  |
+600-1000   | BANK  | BANK  | BANK  | RISKY | ROLL  | ROLL  |
+1000+      | BANK  | BANK  | BANK  | BANK  | ROLL  | ROLL  |
+```
+**Legend:**
+*   **ROLL:** Positive EV. Statistically safe.
+*   **BANK:** Negative EV. You are likely to lose points by rolling.
+*   **RISKY:** Marginal EV (near zero). Context dependent (e.g., are you chasing?).
+
+### Inheritance Decision Tree
+*   **Incoming Dice: 1**
+    *   Banked Points > **Bait Value**? -> **INHERIT** (High Risk, but mathematically justified)
+    *   Else -> **FRESH START**
+*   **Incoming Dice: 2**
+    *   Banked Points > **Bait Value**? -> **INHERIT**
+    *   Else -> **FRESH START**
+*   **Incoming Dice: 3+**
+    *   Generally **INHERIT** unless banked points are negligible (< 100).
 
 ## Appendix: Engine Certification
 The following tests were run against the scoring engine to ensure mathematical accuracy.
@@ -57,3 +109,4 @@ The following tests were run against the scoring engine to ensure mathematical a
 | Full Straight | `[1,2,3,4,5,6]` | 1500 | ✅ |
 | Three Pair | `[1,1,2,2,3,3]` | 1500 | ✅ |
 | Two Triplets | `[1,1,1,2,2,2]` | 1500 | ✅ |
+| Zilch (No Score) | `[2,3,4,6,2,3]` | 0 | ✅ |

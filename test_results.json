@@ -89,5 +89,12 @@
     "expected": 1500,
     "actual": 1500,
     "passed": true
+  },
+  {
+    "name": "Zilch (No Score)",
+    "roll": "[2,3,4,6,2,3]",
+    "expected": 0,
+    "actual": 0,
+    "passed": true
   }
 ]

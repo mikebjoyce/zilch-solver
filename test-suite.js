@@ -14,7 +14,8 @@ const tests = [
     { name: "Large Straight", roll: [2, 3, 4, 5, 6], expected: 750 },
     { name: "Full Straight", roll: [1, 2, 3, 4, 5, 6], expected: 1500 },
     { name: "Three Pair", roll: [1, 1, 2, 2, 3, 3], expected: 1500 },
-    { name: "Two Triplets", roll: [1, 1, 1, 2, 2, 2], expected: 1500 }
+    { name: "Two Triplets", roll: [1, 1, 1, 2, 2, 2], expected: 1500 },
+    { name: "Zilch (No Score)", roll: [2, 3, 4, 6, 2, 3], expected: 0 }
 ];
 
 console.log("--- Engine Validation Suite ---");

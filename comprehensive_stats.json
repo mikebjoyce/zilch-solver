@@ -1,0 +1,104 @@
+{
+  "1": {
+    "dice": 1,
+    "zilchRate": 0.665698,
+    "successRate": 0.334302,
+    "avgGain": 74.902034687199,
+    "specialProbabilities": {
+      "fullStraight": 0,
+      "threePair": 0,
+      "smallStraight": 0,
+      "largeStraight": 0
+    },
+    "evScenarios": {
+      "0": 25.0399,
+      "500": -307.8091,
+      "1000": -640.6581
+    }
+  },
+  "2": {
+    "dice": 2,
+    "zilchRate": 0.443676,
+    "successRate": 0.556324,
+    "avgGain": 90.06666978235704,
+    "specialProbabilities": {
+      "fullStraight": 0,
+      "threePair": 0,
+      "smallStraight": 0,
+      "largeStraight": 0
+    },
+    "evScenarios": {
+      "0": 50.10625,
+      "500": -171.73174999999998,
+      "1000": -393.56975
+    }
+  },
+  "3": {
+    "dice": 3,
+    "zilchRate": 0.277908,
+    "successRate": 0.722092,
+    "avgGain": 119.98034876442337,
+    "specialProbabilities": {
+      "fullStraight": 0,
+      "threePair": 0,
+      "smallStraight": 0,
+      "largeStraight": 0
+    },
+    "evScenarios": {
+      "0": 86.63685,
+      "500": -52.31715000000001,
+      "1000": -191.27115000000003
+    }
+  },
+  "4": {
+    "dice": 4,
+    "zilchRate": 0.15706,
+    "successRate": 0.84294,
+    "avgGain": 170.03938595866848,
+    "specialProbabilities": {
+      "fullStraight": 0,
+      "threePair": 0,
+      "smallStraight": 0,
+      "largeStraight": 0
+    },
+    "evScenarios": {
+      "0": 143.333,
+      "500": 64.803,
+      "1000": -13.727000000000004
+    }
+  },
+  "5": {
+    "dice": 5,
+    "zilchRate": 0.07707,
+    "successRate": 0.92293,
+    "avgGain": 266.18340502529986,
+    "specialProbabilities": {
+      "fullStraight": 0,
+      "threePair": 0,
+      "smallStraight": 0.015366,
+      "largeStraight": 0.015531
+    },
+    "evScenarios": {
+      "0": 245.66865,
+      "500": 207.13365000000002,
+      "1000": 168.59865000000002
+    }
+  },
+  "6": {
+    "dice": 6,
+    "zilchRate": 0.023402,
+    "successRate": 0.976598,
+    "avgGain": 475.063536890307,
+    "specialProbabilities": {
+      "fullStraight": 0.015422,
+      "threePair": 0.04489,
+      "smallStraight": 0.054204,
+      "largeStraight": 0.05407
+    },
+    "evScenarios": {
+      "0": 463.9461,
+      "500": 452.2451,
+      "1000": 440.5441
+    }
+  }
+}

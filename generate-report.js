@@ -1,34 +1,102 @@
 import fs from 'fs';
 
 // Load simulation data
-const BASELINE_DATA = JSON.parse(fs.readFileSync('baseline_data.json', 'utf8'));
+const STATS = JSON.parse(fs.readFileSync('comprehensive_stats.json', 'utf8'));
 const TEST_RESULTS = JSON.parse(fs.readFileSync('test_results.json', 'utf8'));
 
+function fmtPct(val) { return (val * 100).toFixed(2) + '%'; }
+function fmtNum(val) { return val.toFixed(2); }
+
 function calculateThreshold(dice) {
-    const zilchProb = BASELINE_DATA[dice].zilchRate;
-    const successProb = 1 - zilchProb;
-    const avgGain = BASELINE_DATA[dice].avgGain;
-    return Math.floor((successProb * avgGain) / zilchProb);
+    const s = STATS[dice];
+    if (s.zilchRate === 0) return Infinity;
+    // Break-Even: CurrentTotal = (Success% * AvgGain) / Zilch%
+    return Math.floor((s.successRate * s.avgGain) / s.zilchRate);
+}
+
+function generateRiskTable() {
+    let rows = [];
+    rows.push(`| Dice | Zilch % | Success % | Avg. Gain |`);
+    rows.push(`| :--- | :--- | :--- | :--- |`);
+    for (let d = 1; d <= 6; d++) {
+        const s = STATS[d];
+        rows.push(`| **${d}** | ${fmtPct(s.zilchRate)} | ${fmtPct(s.successRate)} | ${fmtNum(s.avgGain)} pts |`);
+    }
+    return rows.join('\n');
+}
+
+function generateEVTable() {
+    let rows = [];
+    rows.push(`| Dice | EV @ 0 pts | EV @ 500 pts | EV @ 1000 pts | Break-Even (Threshold) |`);
+    rows.push(`| :--- | :--- | :--- | :--- | :--- |`);
+    for (let d = 1; d <= 6; d++) {
+        const s = STATS[d];
+        const ev0 = s.evScenarios['0'];
+        const ev500 = s.evScenarios['500'];
+        const ev1000 = s.evScenarios['1000'];
+        const threshold = calculateThreshold(d);
+        const threshStr = threshold === Infinity ? "Always Roll" : `~${threshold} pts`;
+        
+        rows.push(`| **${d}** | ${fmtNum(ev0)} | ${fmtNum(ev500)} | ${fmtNum(ev1000)} | **${threshStr}** |`);
+    }
+    return rows.join('\n');
+}
+
+function generateSpecialTable() {
+    let rows = [];
+    rows.push(`| Dice | Small Straight | Large Straight | Full Straight | Three Pair |`);
+    rows.push(`| :--- | :--- | :--- | :--- | :--- |`);
+    for (let d = 4; d <= 6; d++) {
+        const p = STATS[d].specialProbabilities;
+        rows.push(`| **${d}** | ${fmtPct(p.smallStraight)} | ${fmtPct(p.largeStraight)} | ${fmtPct(p.fullStraight)} | ${fmtPct(p.threePair)} |`);
+    }
+    return rows.join('\n') + "\n\n*Note: 1-3 dice cannot form these combinations (0.00%).*";
 }
 
 function generateInheritanceTable() {
-    // Calculate EV of a fresh 6-dice turn
-    const freshEV = (1 - BASELINE_DATA[6].zilchRate) * BASELINE_DATA[6].avgGain;
-    
+    const freshEV = STATS[6].evScenarios['0'];
     let rows = [];
+    rows.push(`| Dice Passed | Opponent Zilch Risk | Bait Value (Min Bank) |`);
+    rows.push(`| :--- | :--- | :--- |`);
+
     for (let d = 1; d <= 3; d++) {
-        const zilchProb = BASELINE_DATA[d].zilchRate;
-        const avgGain = BASELINE_DATA[d].avgGain;
-        const remainingEV = (1 - zilchProb) * avgGain;
-        
-        // The opponent should only accept the inheritance if:
-        // BankedPoints + RemainingEV > FreshEV
-        // Therefore, MinBank = FreshEV - RemainingEV
-        const minBank = Math.max(0, Math.floor(freshEV - remainingEV));
-        
-        rows.push(`| **${d} Dice** | **${(zilchProb * 100).toFixed(1)}%** | **${minBank} pts** |`);
+        const s = STATS[d];
+        // Min Bank = (FreshEV / SuccessRate) - AvgGain
+        const minBank = (freshEV / s.successRate) - s.avgGain;
+        rows.push(`| **${d} Dice** | **${fmtPct(s.zilchRate)}** | **${Math.ceil(minBank)} pts** |`);
     }
     return rows.join('\n');
+}
+
+function generateDecisionMatrix() {
+    const ranges = [0, 300, 600, 1000];
+    const rangeLabels = ["0-300", "300-600", "600-1000", "1000+"];
+    
+    let table = "```text\n";
+    table += "Turn Total | 1 Die | 2 Dice | 3 Dice | 4 Dice | 5 Dice | 6 Dice\n";
+    table += "-----------|-------|--------|--------|--------|--------|-------\n";
+    
+    rangeLabels.forEach((label, idx) => {
+        const midPoint = ranges[idx] + 150; 
+        let row = label.padEnd(11) + "|";
+        for (let d = 1; d <= 6; d++) {
+            const thresh = calculateThreshold(d);
+            let action = "ROLL";
+            if (thresh !== Infinity) {
+                if (midPoint < thresh * 0.8) action = "ROLL";
+                else if (midPoint > thresh * 1.1) action = "BANK";
+                else action = "RISKY";
+            }
+            row += (" " + action).padEnd(7) + "|";
+        }
+        table += row + "\n";
+    });
+    table += "```";
+    table += "\n**Legend:**\n";
+    table += "*   **ROLL:** Positive EV. Statistically safe.\n";
+    table += "*   **BANK:** Negative EV. You are likely to lose points by rolling.\n";
+    table += "*   **RISKY:** Marginal EV (near zero). Context dependent (e.g., are you chasing?).";
+    return table;
 }
 
 function generateTestAppendix() {
@@ -42,42 +110,61 @@ function generateTestAppendix() {
 const reportContent = `
 # 🎲 Zilch Strategy Guide: The Serendipity Creak Edition
 
-## 1. The "Golden Rule" of 6 Dice
-**Never, under any circumstances, stop when you have Hot Dice (6 dice remaining).**
+## 1. Executive Summary & Risk Analysis
+This guide is generated from **1,000,000** Monte Carlo simulations per die count.
 
-*   **The Math:** Your chance of Zilching is only **${(BASELINE_DATA[6].zilchRate * 100).toFixed(1)}%**.
-*   **The Logic:** Even if you have a massive turn total, the risk of losing it is statistically negligible compared to the massive scoring potential of a fresh 6-dice roll.
+### Consolidated Risk Table
+${generateRiskTable()}
 
-## 2. The 3-Dice Pivot Point
-**3 dice is the "danger zone."**
+### Expected Value (EV) Analysis
+The "Break-Even" point is where the expected gain from rolling equals the potential loss of your current turn total.
+**Formula:** \`EV = (Success% * AvgGain) - (Zilch% * CurrentTurnTotal)\`
 
-*   **The Math:** You have a **${((1 - BASELINE_DATA[3].zilchRate) * 100).toFixed(2)}%** success rate with 3 dice, but that drops to **${((1 - BASELINE_DATA[2].zilchRate) * 100).toFixed(2)}%** once you go down to 2.
-*   **Strategy:** If your current turn total is over **${calculateThreshold(3)} points** and you are down to 3 dice, Bank. The expected gain from rolling those 3 dice is not high enough to justify risking the points you already have.
+${generateEVTable()}
 
-## 3. Weaponizing the "Inheritance Rule"
-**This is how you beat players who only look at their own score. You don't just bank points; you "gift" a bad hand to the next player.**
+## 2. Special Combinations
+Frequency of rolling high-value combinations.
 
-*   **The 'Trap' Play:** If you have 500 points and only 1 die left, STOP.
-*   **The Result:** You bank your 500 points, and the next player is forced to choose: start at 0, or inherit your 500 points with a **${(BASELINE_DATA[1].zilchRate * 100).toFixed(2)}%** chance of Zilching immediately.
-*   **Winning Tip:** If you leave them 1 or 2 dice, you aren't just being safe; you are actively trying to make them lose points.
+${generateSpecialTable()}
 
-### The "Handoff" Calculator
-Use this table to know if your "gift" is actually a trap. The **Min. Bank to Bait** is the minimum points you must pass to make it mathematically correct for your opponent to take the risk. If you pass less than this, a smart opponent will just start fresh.
+## 3. Tactical Guide
 
-| Dice Passed | Opponent Zilch Risk | Min. Bank to Bait |
-| :--- | :--- | :--- |
+### Opening Turn Strategy
+With 6 dice, your EV starting from 0 is **${fmtNum(STATS[6].evScenarios['0'])} points**.
+*   **The 400 Point Paradox:** While the math suggests rolling until you hit a much higher threshold, banking at **~400 points** on your first turn is a valid "Tempo Play."
+*   **Why?** It secures a lead and often leaves the next player with a difficult inheritance (1 or 2 dice), forcing them to take a risk or start fresh.
+
+### Endgame Tactics
+*   **Conservative Play:** If you are leading, adhere strictly to the **Break-Even Thresholds**. Do not give opponents a chance to catch up by taking unnecessary risks.
+*   **Chasing:** If you are behind, you must take "Negative EV" risks. Use the **EV Table** to see how much "theoretical value" you are sacrificing for a chance to win.
+*   **Final Round Inheritance:** If the player before you banks a low score (< 300) and leaves you 1 or 2 dice, **Start Fresh**. The risk of Zilching immediately is too high compared to the potential gain of a fresh 6-dice roll.
+
+### Multiplayer Dynamics: The "Blocking Strategy"
+Banking is not just about securing points; it's about **weaponizing the Inheritance Rule**.
+*   **The Trap:** Leaving an opponent with 1 die (Zilch Risk: **${fmtPct(STATS[1].zilchRate)}**) or 2 dice (Zilch Risk: **${fmtPct(STATS[2].zilchRate)}**) is a powerful defensive move.
+*   **When to Trap:** If you have a moderate score (e.g., 400-500) and are down to 1 or 2 dice, **BANK**. You force the next player to choose between a high-risk inheritance or starting from 0 (negating your "gift").
+
+#### Inheritance Bait Calculator
+Use this table to determine if your banked score is high enough to "bait" a mathematically perfect opponent into taking a bad risk.
+*   **Bait Value:** The minimum points you must pass to make it mathematically correct (Positive EV) for your opponent to take the risk.
+
 ${generateInheritanceTable()}
 
-## 4. Know Your Thresholds
+## 4. Decision Tools
 
-| Dice Remaining | Max "Safe" Points | Logic |
-| :--- | :--- | :--- |
-| **6 Dice** | **Always Roll** | The risk is too low to ignore. |
-| **5 Dice** | **~${calculateThreshold(5)} Points** | Only bank if you are already at a massive total. |
-| **4 Dice** | **~${calculateThreshold(4)} Points** | Still relatively safe (${((1 - BASELINE_DATA[4].zilchRate) * 100).toFixed(0)}% success). |
-| **3 Dice** | **~${calculateThreshold(3)} Points** | The "Pivot." Be very careful here. |
-| **2 Dice** | **~${calculateThreshold(2)} Points** | A coin flip. Only roll if you have almost nothing. |
-| **1 Die** | **~${calculateThreshold(1)} Points** | Effectively a "Death Sentence." Never roll. |
+### Risk/Reward Decision Matrix
+Quick reference for mid-game decisions.
+${generateDecisionMatrix()}
+
+### Inheritance Decision Tree
+*   **Incoming Dice: 1**
+    *   Banked Points > **Bait Value**? -> **INHERIT** (High Risk, but mathematically justified)
+    *   Else -> **FRESH START**
+*   **Incoming Dice: 2**
+    *   Banked Points > **Bait Value**? -> **INHERIT**
+    *   Else -> **FRESH START**
+*   **Incoming Dice: 3+**
+    *   Generally **INHERIT** unless banked points are negligible (< 100).
 
 ## Appendix: Engine Certification
 The following tests were run against the scoring engine to ensure mathematical accuracy.
