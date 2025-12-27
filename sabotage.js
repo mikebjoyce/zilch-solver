@@ -1,21 +1,13 @@
-import { calculateScore } from './engine.js';
+import fs from 'fs';
 
-// Zilch rates from our 1 million roll simulation
-const ZILCH_RATES = {
-    1: 0.6667,
-    2: 0.4443,
-    3: 0.2781,
-    4: 0.1575,
-    5: 0.0774,
-    6: 0.0230
-};
+const stats = JSON.parse(fs.readFileSync('comprehensive_stats.json', 'utf8'));
 
 /**
  * Evaluates the "Stinkiness" of a hand-off.
  * Higher value = better for you (next player likely to Zilch)
  */
 function evaluateHandOff(bankedPoints, diceRemaining) {
-    const zilchChance = ZILCH_RATES[diceRemaining];
+    const zilchChance = stats[diceRemaining].zilchRate;
     const expectedLossForNextPlayer = bankedPoints * zilchChance;
     
     console.log(`If you bank ${bankedPoints} with ${diceRemaining} dice left:`);

@@ -10,10 +10,10 @@ export function calculateScore(dice) {
     // Three Pair (or two triplets)
     const pairs = counts.filter(c => c >= 2).length;
     const triplets = counts.filter(c => c >= 3).length;
-    if (pairs === 3 || triplets === 2) return { score: 1500, diceUsed: 6 };
+    if (pairs === 3 || triplets === 2) return { score: 1500, diceUsed: 6, handType: "Three Pair / Two Triplets" };
 
     // Full Straight (1,2,3,4,5,6)
-    if (counts.slice(1).every(c => c === 1)) return { score: 1500, diceUsed: 6 };
+    if (counts.slice(1).every(c => c === 1)) return { score: 1500, diceUsed: 6, handType: "Full Straight" };
   }
 
   // 2. Check for 5-Dice Straights
@@ -31,7 +31,7 @@ export function calculateScore(dice) {
     
     // We return this immediately because 750+ is almost always better 
     // than individual sets from the same 5 dice.
-    return { score: currentScore, diceUsed: currentUsed };
+    return { score: currentScore, diceUsed: currentUsed, handType: smallStraight ? "Small Straight" : "Large Straight" };
   }
 
   // 3. Multiples (3x, 4x, 5x, 6x)
@@ -56,4 +56,21 @@ export function calculateScore(dice) {
   }
 
   return { score: totalScore, diceUsed: diceUsed };
+}
+
+export function getHandType(roll, result) {
+    if (result.score === 0) return "Zilch";
+    
+    // If the engine already identified a special hand, use that.
+    if (result.handType) return result.handType;
+    
+    const counts = new Array(7).fill(0);
+    roll.forEach(d => counts[d]++);
+
+    const maxMulti = Math.max(...counts);
+    if (maxMulti >= 3) return `${maxMulti}-of-a-Kind`;
+    
+    if (counts[1] > 0 || counts[5] > 0) return "Single 1s/5s Only";
+
+    return "Other Scoring";
 }

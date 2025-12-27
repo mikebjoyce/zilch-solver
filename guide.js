@@ -1,7 +1,6 @@
-import { calculateScore } from './engine.js';
 import fs from 'fs';
 
-const BASELINE_DATA = JSON.parse(fs.readFileSync('baseline_data.json', 'utf8'));
+const STATS = JSON.parse(fs.readFileSync('comprehensive_stats.json', 'utf8'));
 
 function generateGuide() {
     console.log("=== ZILCH OPTIMAL STRATEGY GUIDE ===");
@@ -10,9 +9,9 @@ function generateGuide() {
     const tableData = [];
 
     for (let dice = 1; dice <= 6; dice++) {
-        const zilchProb = BASELINE_DATA[dice].zilchRate;
+        const zilchProb = STATS[dice].zilchRate;
         const successProb = 1 - zilchProb;
-        const avgGain = BASELINE_DATA[dice].avgGain;
+        const avgGain = STATS[dice].avgGain;
 
         /* The 'Break Even' point is where:
            (SuccessProb * AvgGain) = (ZilchProb * CurrentTotal)

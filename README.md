@@ -20,7 +20,6 @@ This repository contains a full-stack probability engine for Zilch:
 zilch-solver/
 ├── engine.js              # Core scoring logic (Singles, Sets, Straights)
 ├── probabilities.js       # Large-scale simulations (1M+ iterations)
-├── strategy.js            # "Stop at X" strategy optimization
 ├── sabotage.js            # Inheritance Rule trap analysis
 ├── generate-report.js     # Automated strategy report generator
 ├── RULES.md               # Human-readable game ruleset
@@ -31,7 +30,6 @@ zilch-solver/
 
 * **`engine.js`:** Handles all scoring from single 1s/5s to complex Full Straights
 * **`probabilities.js`:** Calculates success rates and average scores per die count
-* **`strategy.js`:** Tests banking strategies to maximize Average Points Per Turn
 * **`sabotage.js`:** Analyzes opponent-trapping tactics via Inheritance Rule
 * **`generate-report.js`:** Consumes simulation data, writes `STRATEGY_GUIDE.md`
 
@@ -65,7 +63,6 @@ This executes all probability calculations and outputs `STRATEGY_GUIDE.md` with 
 
 ```bash
 node probabilities.js    # Calculate Zilch rates and expected values
-node strategy.js         # Test banking threshold strategies
 node sabotage.js         # Analyze inheritance traps
 ```
 

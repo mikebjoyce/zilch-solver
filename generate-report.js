@@ -1,28 +1,45 @@
 import fs from 'fs';
 
+const colors = {
+    reset: "\x1b[0m",
+    bright: "\x1b[1m",
+    green: "\x1b[32m",
+    cyan: "\x1b[36m",
+    red: "\x1b[31m",
+};
+
 // Load simulation data
 const STATS = JSON.parse(fs.readFileSync('comprehensive_stats.json', 'utf8'));
 const TEST_RESULTS = JSON.parse(fs.readFileSync('test_results.json', 'utf8'));
 
+const diceKeys = Object.keys(STATS).filter(k => !isNaN(parseInt(k)));
+const MAX_DICE = diceKeys.length ? Math.max(...diceKeys.map(Number)) : 6;
 const ITERATIONS = process.env.SIMULATION_ITERATIONS ? parseInt(process.env.SIMULATION_ITERATIONS) : 1000000;
+
+console.log(`${colors.cyan}Generating Strategy Guide...${colors.reset}`);
 
 function fmtPct(val) { return (val * 100).toFixed(2) + '%'; }
 function fmtNum(val) { return val.toFixed(2); }
+
+function calculateEV(stats, currentTotal) {
+    const successRate = 1 - stats.zilchRate;
+    return (successRate * stats.avgGain) - (stats.zilchRate * currentTotal);
+}
 
 function calculateThreshold(dice) {
     const s = STATS[dice];
     if (s.zilchRate === 0) return Infinity;
     // Break-Even: CurrentTotal = (Success% * AvgGain) / Zilch%
-    return Math.floor((s.successRate * s.avgGain) / s.zilchRate);
+    return Math.floor(((1 - s.zilchRate) * s.avgGain) / s.zilchRate);
 }
 
 function generateRiskTable() {
     let rows = [];
     rows.push(`| Dice | Zilch % | Success % | Avg. Gain |`);
     rows.push(`| :--- | :--- | :--- | :--- |`);
-    for (let d = 1; d <= 6; d++) {
+    for (let d = 1; d <= MAX_DICE; d++) {
         const s = STATS[d];
-        rows.push(`| **${d}** | ${fmtPct(s.zilchRate)} | ${fmtPct(s.successRate)} | ${fmtNum(s.avgGain)} pts |`);
+        rows.push(`| **${d}** | ${fmtPct(s.zilchRate)} | ${fmtPct(1 - s.zilchRate)} | ${fmtNum(s.avgGain)} pts |`);
     }
     return rows.join('\n');
 }
@@ -31,11 +48,11 @@ function generateEVTable() {
     let rows = [];
     rows.push(`| Dice | EV @ 0 pts | EV @ 500 pts | EV @ 1000 pts | Break-Even (Threshold) |`);
     rows.push(`| :--- | :--- | :--- | :--- | :--- |`);
-    for (let d = 1; d <= 6; d++) {
+    for (let d = 1; d <= MAX_DICE; d++) {
         const s = STATS[d];
-        const ev0 = s.evScenarios['0'];
-        const ev500 = s.evScenarios['500'];
-        const ev1000 = s.evScenarios['1000'];
+        const ev0 = calculateEV(s, 0);
+        const ev500 = calculateEV(s, 500);
+        const ev1000 = calculateEV(s, 1000);
         const threshold = calculateThreshold(d);
         const threshStr = threshold === Infinity ? "Always Roll" : `~${threshold} pts`;
         
@@ -48,7 +65,7 @@ function generateSpecialTable() {
     let rows = [];
     rows.push(`| Dice | Small Straight | Large Straight | Full Straight | Three Pair |`);
     rows.push(`| :--- | :--- | :--- | :--- | :--- |`);
-    for (let d = 4; d <= 6; d++) {
+    for (let d = 4; d <= MAX_DICE; d++) {
         const p = STATS[d].specialProbabilities;
         rows.push(`| **${d}** | ${fmtPct(p.smallStraight)} | ${fmtPct(p.largeStraight)} | ${fmtPct(p.fullStraight)} | ${fmtPct(p.threePair)} |`);
     }
@@ -56,7 +73,8 @@ function generateSpecialTable() {
 }
 
 function generateInheritanceTable() {
-    const freshEV = STATS[6].evScenarios['0'];
+    const freshStats = STATS[MAX_DICE];
+    const freshEV = calculateEV(freshStats, 0);
     let rows = [];
     rows.push(`| Dice Passed | Opponent Zilch Risk | Bait Value (Min Bank) |`);
     rows.push(`| :--- | :--- | :--- |`);
@@ -64,7 +82,7 @@ function generateInheritanceTable() {
     for (let d = 1; d <= 3; d++) {
         const s = STATS[d];
         // Min Bank = (FreshEV / SuccessRate) - AvgGain
-        const minBank = (freshEV / s.successRate) - s.avgGain;
+        const minBank = (freshEV / (1 - s.zilchRate)) - s.avgGain;
         rows.push(`| **${d} Dice** | **${fmtPct(s.zilchRate)}** | **${Math.ceil(minBank)} pts** |`);
     }
     return rows.join('\n');
@@ -74,14 +92,21 @@ function generateDecisionMatrix() {
     const ranges = [0, 300, 600, 1000];
     const rangeLabels = ["0-300", "300-600", "600-1000", "1000+"];
     
-    let table = "```text\n";
-    table += "Turn Total | 1 Die | 2 Dice | 3 Dice | 4 Dice | 5 Dice | 6 Dice\n";
-    table += "-----------|-------|--------|--------|--------|--------|-------\n";
+    let rows = [];
+    
+    let header = "| Turn Total |";
+    let separator = "| :--- |";
+    for (let d = 1; d <= MAX_DICE; d++) {
+        header += (d === 1 ? " 1 Die |" : ` ${d} Dice |`);
+        separator += " :--- |";
+    }
+    rows.push(header);
+    rows.push(separator);
     
     rangeLabels.forEach((label, idx) => {
         const midPoint = ranges[idx] + 150; 
-        let row = label.padEnd(11) + "|";
-        for (let d = 1; d <= 6; d++) {
+        let row = `| **${label}** |`;
+        for (let d = 1; d <= MAX_DICE; d++) {
             const thresh = calculateThreshold(d);
             let action = "ROLL";
             if (thresh !== Infinity) {
@@ -89,12 +114,12 @@ function generateDecisionMatrix() {
                 else if (midPoint > thresh * 1.1) action = "BANK";
                 else action = "RISKY";
             }
-            row += (" " + action).padEnd(7) + "|";
+            row += ` ${action} |`;
         }
-        table += row + "\n";
+        rows.push(row);
     });
-    table += "```";
-    table += "\n**Legend:**\n";
+    let table = rows.join('\n');
+    table += "\n\n**Legend:**\n";
     table += "*   **ROLL:** Positive EV. Statistically safe.\n";
     table += "*   **BANK:** Negative EV. You are likely to lose points by rolling.\n";
     table += "*   **RISKY:** Marginal EV (near zero). Context dependent (e.g., are you chasing?).";
@@ -132,7 +157,7 @@ ${generateSpecialTable()}
 ## 3. Tactical Guide
 
 ### Opening Turn Strategy
-With 6 dice, your EV starting from 0 is **${fmtNum(STATS[6].evScenarios['0'])} points**.
+With ${MAX_DICE} dice, your EV starting from 0 is **${fmtNum(calculateEV(STATS[MAX_DICE], 0))} points**.
 *   **The 400 Point Paradox:** While the math suggests rolling until you hit a much higher threshold, banking at **~400 points** on your first turn is a valid "Tempo Play."
 *   **Why?** It secures a lead and often leaves the next player with a difficult inheritance (1 or 2 dice), forcing them to take a risk or start fresh.
 
@@ -178,7 +203,7 @@ ${generateTestAppendix()}
 
 try {
     fs.writeFileSync('STRATEGY_GUIDE.md', reportContent.trim());
-    console.log("Successfully generated STRATEGY_GUIDE.md");
+    console.log(`${colors.green}${colors.bright}✔ Successfully generated STRATEGY_GUIDE.md${colors.reset}\n`);
 } catch (err) {
-    console.error("Error writing report:", err);
+    console.error(`${colors.red}❌ Error writing report:${colors.reset}`, err);
 }

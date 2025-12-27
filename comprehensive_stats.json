@@ -1,104 +1,62 @@
 {
   "1": {
-    "dice": 1,
-    "zilchRate": 0.6665899,
-    "successRate": 0.33341010000000004,
-    "avgGain": 75.02338711394766,
+    "zilchRate": 0.666857,
+    "avgGain": 75.07361703532717,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
       "smallStraight": 0,
       "largeStraight": 0
-    },
-    "evScenarios": {
-      "0": 25.013555000000004,
-      "500": -308.281395,
-      "1000": -641.576345
     }
   },
   "2": {
-    "dice": 2,
-    "zilchRate": 0.4444251,
-    "successRate": 0.5555749,
-    "avgGain": 89.98392475973986,
+    "zilchRate": 0.444034,
+    "avgGain": 90.01467715651677,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
       "smallStraight": 0,
       "largeStraight": 0
-    },
-    "evScenarios": {
-      "0": 49.99281,
-      "500": -172.21974000000003,
-      "1000": -394.43229
     }
   },
   "3": {
-    "dice": 3,
-    "zilchRate": 0.2778064,
-    "successRate": 0.7221936,
-    "avgGain": 120.15357100921415,
+    "zilchRate": 0.277626,
+    "avgGain": 120.08426383009355,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
       "smallStraight": 0,
       "largeStraight": 0
-    },
-    "evScenarios": {
-      "0": 86.77414,
-      "500": -52.129059999999996,
-      "1000": -191.03226
     }
   },
   "4": {
-    "dice": 4,
-    "zilchRate": 0.1574283,
-    "successRate": 0.8425717,
-    "avgGain": 170.364468685573,
+    "zilchRate": 0.157619,
+    "avgGain": 170.51607289338196,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
       "smallStraight": 0,
       "largeStraight": 0
-    },
-    "evScenarios": {
-      "0": 143.54428000000001,
-      "500": 64.83013000000001,
-      "1000": -13.884019999999992
     }
   },
   "5": {
-    "dice": 5,
-    "zilchRate": 0.0771266,
-    "successRate": 0.9228734,
-    "avgGain": 266.3544804737031,
+    "zilchRate": 0.07712,
+    "avgGain": 266.2932884015257,
     "specialProbabilities": {
       "fullStraight": 0,
       "threePair": 0,
-      "smallStraight": 0.0154246,
-      "largeStraight": 0.0154309
-    },
-    "evScenarios": {
-      "0": 245.811465,
-      "500": 207.248165,
-      "1000": 168.684865
+      "smallStraight": 0.015443,
+      "largeStraight": 0.015488
     }
   },
   "6": {
-    "dice": 6,
-    "zilchRate": 0.0231864,
-    "successRate": 0.9768136,
-    "avgGain": 475.14323101152564,
+    "zilchRate": 0.023107,
+    "avgGain": 475.0281760643182,
     "specialProbabilities": {
-      "fullStraight": 0.0155046,
-      "threePair": 0.0449856,
-      "smallStraight": 0.0540884,
-      "largeStraight": 0.0540081
-    },
-    "evScenarios": {
-      "0": 464.12637,
-      "500": 452.53317,
-      "1000": 440.93997
+      "fullStraight": 0.015532,
+      "threePair": 0.044965,
+      "smallStraight": 0.038802,
+      "largeStraight": 0.038481
     }
   }
 }
